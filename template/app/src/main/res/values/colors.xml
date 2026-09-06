@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_color">{{SPLASH_COLOR}}</color>
+    <color name="status_bar_color">{{STATUS_BAR_COLOR}}</color>
+    <color name="nav_bar_color">{{NAV_BAR_COLOR}}</color>
+</resources>
