@@ -1,0 +1,27 @@
+name: Build APK
+
+on:
+  repository_dispatch:
+    types: [apk-build]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Gerar APK
+        env:
+          BUILD_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          BUILD_CALLBACK_SECRET: ${{ secrets.BUILD_CALLBACK_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node build.js
