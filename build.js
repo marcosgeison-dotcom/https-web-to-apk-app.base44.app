@@ -9,7 +9,6 @@ const fs = require("fs");
 const path = require("path");
 
 const payload = JSON.parse(process.env.BUILD_PAYLOAD || "{}");
-const CALLBACK_SECRET = process.env.BUILD_CALLBACK_SECRET;
 const GH_TOKEN = process.env.GITHUB_TOKEN;
 const REPO = process.env.GITHUB_REPOSITORY;
 
@@ -31,11 +30,12 @@ function run(cmd, cwd) {
 }
 
 async function report(data) {
-  if (!callbackUrl || !CALLBACK_SECRET) return;
+  // O callback já contém o token único do build na própria URL — sem segredo compartilhado.
+  if (!callbackUrl) return;
   try {
     await fetch(callbackUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-Build-Secret": CALLBACK_SECRET },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ build_id: buildId, ...data }),
     });
   } catch (err) {
