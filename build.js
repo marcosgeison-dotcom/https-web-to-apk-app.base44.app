@@ -33,11 +33,14 @@ async function report(data) {
   // O callback já contém o token único do build na própria URL — sem segredo compartilhado.
   if (!callbackUrl) return;
   try {
-    await fetch(callbackUrl, {
+    const res = await fetch(callbackUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ build_id: buildId, ...data }),
     });
+    if (!res.ok) {
+      console.error(`Callback respondeu HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    }
   } catch (err) {
     console.error("Falha no callback:", err.message);
   }
