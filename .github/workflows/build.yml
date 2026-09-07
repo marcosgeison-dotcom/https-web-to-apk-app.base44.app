@@ -21,7 +21,6 @@ jobs:
       - name: Gerar APK
         env:
           BUILD_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
-          BUILD_CALLBACK_SECRET: ${{ secrets.BUILD_SERVICE_SECRET }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: node build.js
