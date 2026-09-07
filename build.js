@@ -109,6 +109,7 @@ async function main() {
   }
   await write("app/src/main/AndroidManifest.xml", manifest);
 
+  fs.mkdirSync(path.join(WORK_DIR, "app/src/main/assets"), { recursive: true });
   await write(
     "app/src/main/assets/config.json",
     JSON.stringify(
